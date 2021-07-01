@@ -43,7 +43,7 @@ def roll_math(tokens):
         elif isinstance(token, ParseResults): # essentially a nested list
             result = roll_math(token[0])
             if total is None:
-                total = token
+                total = result
                 continue
 
             if next_operation == MathType.multiply:
