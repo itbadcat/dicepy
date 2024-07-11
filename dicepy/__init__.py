@@ -37,7 +37,7 @@ def roll_math(tokens):
             elif next_operation == MathType.subtract:
                 total -= token
             else:
-                raise Exception('what the heck did you do?')
+                raise Exception('What the heck did you even DO?')
         elif isinstance(token, MathType):
             next_operation = token
         elif isinstance(token, ParseResults): # essentially a nested list
