@@ -15,6 +15,35 @@ class MathType(Enum):
     add = '+'
     subtract = '-'
 
+class Roll:
+    keep_type = None
+    keep_amount = 1
+    dice = None
+    value = None
+
+    def __init__(self, sides: int, dice_count: int, keep_type: KeepType = None, keep_amount: int = 1):
+        self.dice = [randint(1, sides) for _ in range(dice_count)]
+        self.keep_type = keep_type
+        if keep_type == None:
+            self.value = sum(self.dice)
+        # 3d6k2 and 3d6kh2
+        elif keep_type == KeepType.highest or keep_type == KeepType.keep:
+            self.keep_amount = 2
+            self.value = sum(sorted(self.dice)[-self.keep_amount:])
+        else: # KeepType.lowest
+            self.value = sum(sorted(self.dice)[:self.keep_amount])
+
+        # Just for fun if this ever gets min'd to 3.10
+        #match keep_type:
+        #    case None: # KeepType.all?
+        #        self.value = sum(self.dice)
+        #    case KeepType.keep | KeepType.highest:
+        #        self.value = sum(sorted(self.dice)[-self.keep_amount:])
+        #    case KeepType.lowest:
+        #        self.value=sum(sorted(self.dice)[:self.keep_amount])
+
+    def __repr__(self):
+        return f"Roll(keep_type='{self.keep_type}' dice='{self.dice}' value='{self.value}')"
 
 def roll_math(tokens):
     # '2d20k + (4d6kl2+6)*2' => [13, '+', [[2, '+', 6], '*', 2]]
@@ -60,17 +89,11 @@ def roll_math(tokens):
     return total
             
 
-def perform_roll(dice: int, sides: int, keep_type: OptionalType[KeepType] = None, keep_amount: int = 1) -> int:
-    if dice > 100 or sides > 100 or keep_amount > dice:
+def perform_roll(dice_count: int, sides: int, keep_type: OptionalType[KeepType] = None, keep_amount: int = 1) -> Roll:
+    if dice_count > 100 or sides > 100 or keep_amount > dice_count:
         raise Exception('you wot mate?')
-    rolls = [randint(1, sides) for _ in range(dice)]
+    return Roll(sides, dice_count, keep_type, keep_amount)
 
-    if keep_type == None:
-        return sum(rolls)
-    elif keep_type == KeepType.highest or keep_type == KeepType.keep:
-        return sum(sorted(rolls)[-keep_amount:])
-    else: # KeepType.lowest
-        return sum(sorted(rolls)[:keep_amount])
 
 muldiv = oneOf(['*', '/'])('muldiv').setParseAction(lambda token: MathType(token[0]))
 addsub = oneOf(['+', '-'])('addsub').setParseAction(lambda token: MathType(token[0]))
