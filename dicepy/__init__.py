@@ -21,7 +21,7 @@ class Roll:
     dice = None
     value = None
 
-    def __init__(self, sides: int, dice_count: int, keep_type: KeepType = None, keep_amount: int = 1):
+    def __init__(self, sides: int, dice_count: int, keep_type: OptionalType[KeepType] = None, keep_amount: int = 1):
         self.dice = [randint(1, sides) for _ in range(dice_count)]
         self.keep_type = keep_type
         self.keep_amount = keep_amount
@@ -43,7 +43,7 @@ class Roll:
         #        self.value=sum(sorted(self.dice)[:self.keep_amount])
 
     def __repr__(self):
-        return f"Roll(keep_type='{self.keep_type}' dice='{self.dice}' value='{self.value}')"
+        return f"Roll(keep_type='{self.keep_type}' keep_amount='{self.keep_amount}' dice='{self.dice}' value='{self.value}')"
 
 def roll_math(tokens):
     # '2d20k + (4d6kl2+6)*2' => [13, '+', [[2, '+', 6], '*', 2]]
