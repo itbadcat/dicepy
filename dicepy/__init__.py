@@ -43,7 +43,10 @@ class Roll:
         #        self.value=sum(sorted(self.dice)[:self.keep_amount])
 
     def __repr__(self):
-        return f"Roll(keep_type='{self.keep_type}' keep_amount='{self.keep_amount}' dice='{self.dice}' value='{self.value}')"
+        amount = ' '
+        if self.keep_type:
+            amount = f" keep_amount='{self.keep_amount}' "
+        return f"Roll(keep_type='{self.keep_type}'{amount}dice='{self.dice}' value='{self.value}')"
 
 def roll_math(tokens):
     # '2d20k + (4d6kl2+6)*2' => [13, '+', [[2, '+', 6], '*', 2]]
