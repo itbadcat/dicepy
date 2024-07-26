@@ -37,3 +37,15 @@ class Roll:
         if self.keep_type:
             amount = f" keep_amount='{self.keep_amount}' "
         return f"Roll(keep_type='{self.keep_type}'{amount}dice='{self.dice}' value='{self.value}')"
+
+    def __add__(self, o):
+        return self.value + o.value
+
+    def __sub__(self, o):
+        return self.value - o.value
+
+    def __mul__(self, o):
+        return self.value * o.value
+
+    def __truediv__(self, o):
+        return self.value / o.value
