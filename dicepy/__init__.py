@@ -51,7 +51,7 @@ def roll_math(tokens):
 def perform_roll(dice_count: int, sides: int, keep_type: OptionalType[KeepType] = None, keep_amount: int = 1) -> Roll:
     if dice_count > 100 or sides > 100 or keep_amount > dice_count:
         raise Exception('you wot mate?')
-    return Roll(sides, dice_count, keep_type, keep_amount)
+    return Roll(sides, dice_count, None, keep_type, keep_amount)
 
 
 muldiv = oneOf(['*', '/'])('muldiv').setParseAction(lambda token: MathType(token[0]))

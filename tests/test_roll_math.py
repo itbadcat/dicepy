@@ -28,5 +28,7 @@ class TestSingleRoll(TestCase):
     def test_div(self):
         roll: Roll = single_roll.parseString('5d6kl2')[0]
         roll2: Roll = single_roll.parseString('5d6kh2')[0]
-        self.assertEqual(roll / roll2, 4 / 11)
+        self.assertAlmostEqual(roll / roll2, 0.36363, delta=0.00001)
         self.assertEqual(roll2 / roll, 2.75)
+        self.assertEqual(roll // roll2, 0)
+        self.assertEqual(roll2 // roll, 2)
