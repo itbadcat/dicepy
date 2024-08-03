@@ -1,6 +1,7 @@
+from __future__ import annotations
 from enum import Enum
 from random import randint
-from typing import List, Optional as OptionalType
+from typing import Union, List, Optional as OptionalType
 from pyparsing import Suppress, Optional, pyparsing_common, oneOf, infixNotation, opAssoc, ParseResults
 from functools import cached_property
 from numbers import Real
@@ -44,42 +45,42 @@ class Roll:
         else: #KeepType.lowest
             return sum(sorted(self.dice)[:self.keep_amount])
 
-    def __add__(self, o):
-        if isinstance(o, Real):
-            return self.value + o
-        elif isinstance(o, Roll):
-            return self.value + o.value
+    def __add__(self, other: Union[Real, Roll]) -> Real:
+        if isinstance(other, Real):
+            return self.value + other
+        elif isinstance(other, Roll):
+            return self.value + other.value
         else:
             raise Exception("Bad addition operand type")
 
-    def __sub__(self, o):
-        if isinstance(o, Real):
-            return self.value - o
-        elif isinstance(o, Roll):
-            return self.value - o.value
+    def __sub__(self, other: Union[Real, Roll]) -> Real:
+        if isinstance(other, Real):
+            return self.value - other
+        elif isinstance(other, Roll):
+            return self.value - other.value
         else:
             raise Exception("Bad subtraction operand type")
 
-    def __mul__(self, o):
-        if isinstance(o, Real):
-            return self.value * o
-        elif isinstance(o, Roll):
-            return self.value * o.value
+    def __mul__(self, other: Union[Real, Roll]) -> Real:
+        if isinstance(other, Real):
+            return self.value * other
+        elif isinstance(other, Roll):
+            return self.value * other.value
         else:
             raise Exception("Bad multiplication operand type")
 
-    def __truediv__(self, o):
-        if isinstance(o, Real):
-            return self.value / o
-        elif isinstance(o, Roll):
-            return self.value / o.value
+    def __truediv__(self, other: Union[Real, Roll]) -> Real:
+        if isinstance(other, Real):
+            return self.value / other
+        elif isinstance(other, Roll):
+            return self.value / other.value
         else:
             raise Exception("Bad true division operand type")
 
-    def __floordiv__(self, o):
-        if isinstance(o, Real):
-            return self.value // o
-        elif isinstance(o, Roll):
-            return self.value // o.value
+    def __floordiv__(self, other: Union[Real, Roll]) -> Real:
+        if isinstance(other, Real):
+            return self.value // other
+        elif isinstance(other, Roll):
+            return self.value // other.value
         else:
             raise Exception("Bad floor division operand type")

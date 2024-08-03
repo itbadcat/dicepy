@@ -6,7 +6,7 @@ from dicepy.roll import Roll, KeepType
 
 def roll_math(tokens):
     # '2d20k + (4d6kl2+6)*2' => [13, '+', [[2, '+', 6], '*', 2]]
-    if isinstance(tokens, (int, Roll)): # it's just a single int
+    if isinstance(tokens, (int, Roll)): # it's just a single int or a roll
         return tokens
     total = None
     next_operation = None
@@ -51,7 +51,7 @@ def roll_math(tokens):
 def perform_roll(dice_count: int, sides: int, keep_type: OptionalType[KeepType] = None, keep_amount: int = 1) -> Roll:
     if dice_count > 100 or sides > 100 or keep_amount > dice_count:
         raise Exception('you wot mate?')
-    return Roll(sides, dice_count, None, keep_type, keep_amount)
+    return Roll(sides=sides, dice_count=dice_count, initial_rolls=None, keep_type=keep_type, keep_amount=keep_amount)
 
 
 muldiv = oneOf(['*', '/'])('muldiv').setParseAction(lambda token: MathType(token[0]))
