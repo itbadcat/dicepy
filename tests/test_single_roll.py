@@ -27,3 +27,8 @@ class TestSingleRoll(TestCase):
         self.assertListEqual(roll.dice, [3, 1, 4, 5, 5])
         self.assertEqual(roll.keep_type, KeepType.lowest)
         self.assertEqual(roll.keep_amount, 2)
+
+    def test_init_dice(self):
+        roll: Roll = Roll(20, 5, [1, 17, 4, 8, 12], KeepType.highest, 2)
+        self.assertEqual(roll.value, 29)
+        self.assertListEqual(roll.dice, [1, 4, 8, 12, 17])
