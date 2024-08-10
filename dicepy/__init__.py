@@ -1,8 +1,7 @@
-from enum import Enum
-from random import randint
 from typing import Optional as OptionalType
-from pyparsing import Suppress, Optional, pyparsing_common, oneOf, infixNotation, opAssoc, ParseResults
-from dicepy.roll import Roll, KeepType
+from pyparsing import Suppress, Optional, pyparsing_common, oneOf,\
+        infixNotation, opAssoc, ParseResults
+from dicepy.roll import Roll, KeepType, MathType
 
 def roll_math(tokens):
     # '2d20k + (4d6kl2+6)*2' => [13, '+', [[2, '+', 6], '*', 2]]
@@ -48,10 +47,12 @@ def roll_math(tokens):
     return total
             
 
-def perform_roll(dice_count: int, sides: int, keep_type: OptionalType[KeepType] = None, keep_amount: int = 1) -> Roll:
+def perform_roll(dice_count: int, sides: int, keep_type: OptionalType[KeepType] = None,\
+        keep_amount: int = 1) -> Roll:
     if dice_count > 100 or sides > 100 or keep_amount > dice_count:
         raise Exception('you wot mate?')
-    return Roll(sides=sides, dice_count=dice_count, initial_rolls=None, keep_type=keep_type, keep_amount=keep_amount)
+    return Roll(sides=sides, dice_count=dice_count, initial_rolls=None,\
+            keep_type=keep_type, keep_amount=keep_amount)
 
 
 muldiv = oneOf(['*', '/'])('muldiv').setParseAction(lambda token: MathType(token[0]))
@@ -61,11 +62,13 @@ dice = Optional(pyparsing_common.integer, default=1)('dice')
 d = Suppress('d')
 sides = pyparsing_common.integer('sides')
 
-keep_type = oneOf([e.value for e in KeepType])('keep_type').setParseAction(lambda token: KeepType(token[0]))
+keep_type = oneOf([e.value for e in KeepType])('keep_type')\
+        .setParseAction(lambda token: KeepType(token[0]))
 amount = Optional(pyparsing_common.integer, default=1)('keep_amount')
 keep = Optional(keep_type + amount)
 
-single_roll = (dice + d + sides + keep).setParseAction(lambda tokens: perform_roll(*tokens))
+single_roll = (dice + d + sides + keep).setParseAction(
+        lambda tokens: perform_roll(*tokens))
 roll = infixNotation(
     single_roll | pyparsing_common.integer,
     [

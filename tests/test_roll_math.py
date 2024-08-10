@@ -1,4 +1,4 @@
-from dicepy import single_roll, KeepType, Roll
+from dicepy import single_roll, Roll
 
 from unittest import TestCase
 import random

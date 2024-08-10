@@ -2,7 +2,7 @@ from __future__ import annotations
 from enum import Enum
 from random import randint
 from typing import Union, List, Optional as OptionalType
-from pyparsing import Suppress, Optional, pyparsing_common, oneOf, infixNotation, opAssoc, ParseResults
+#from pyparsing import ParseResults
 from functools import cached_property
 from numbers import Real
 
@@ -22,7 +22,11 @@ class Roll:
     keep_amount = 1
     dice = None
 
-    def __init__(self, sides: int, dice_count: int, initial_rolls: OptionalType[List[int]] = None, keep_type: OptionalType[KeepType] = None, keep_amount: int = 1):
+    def __init__(self, sides: int,
+                 dice_count: int,
+                 initial_rolls: OptionalType[List[int]] = None,
+                 keep_type: OptionalType[KeepType] = None,
+                 keep_amount: int = 1):
         if initial_rolls is None:
             self.dice = [randint(1, sides) for _ in range(dice_count)]
         else:
@@ -38,7 +42,7 @@ class Roll:
 
     @cached_property
     def value(self):
-        if self.keep_type == None:
+        if self.keep_type is None:
             return sum(self.dice)
         elif self.keep_type == KeepType.highest or self.keep_type == KeepType.keep:
             return sum(sorted(self.dice)[-self.keep_amount:])
