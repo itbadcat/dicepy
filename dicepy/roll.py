@@ -34,14 +34,14 @@ class Roll:
         self.keep_type = keep_type
         self.keep_amount = keep_amount
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         amount = ' '
         if self.keep_type:
             amount = f" keep_amount='{self.keep_amount}' "
         return f"Roll(keep_type='{self.keep_type}'{amount}dice='{self.dice}' value='{self.value}')"
 
     @cached_property
-    def value(self):
+    def value(self) -> Real:
         if self.keep_type is None:
             return sum(self.dice)
         elif self.keep_type == KeepType.highest or self.keep_type == KeepType.keep:
