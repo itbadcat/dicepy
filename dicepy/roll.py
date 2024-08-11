@@ -2,14 +2,17 @@ from __future__ import annotations
 from enum import Enum
 from random import randint
 from typing import Union, List, Optional as OptionalType
-#from pyparsing import ParseResults
+
+# from pyparsing import ParseResults
 from functools import cached_property
 from numbers import Real
+
 
 class KeepType(Enum):
     keep = 'k'
     highest = 'kh'
     lowest = 'kl'
+
 
 class MathType(Enum):
     multiply = '*'
@@ -17,16 +20,20 @@ class MathType(Enum):
     add = '+'
     subtract = '-'
 
+
 class Roll:
     keep_type = None
     keep_amount = 1
     dice = None
 
-    def __init__(self, sides: int,
-                 dice_count: int,
-                 initial_rolls: OptionalType[List[int]] = None,
-                 keep_type: OptionalType[KeepType] = None,
-                 keep_amount: int = 1):
+    def __init__(
+        self,
+        sides: int,
+        dice_count: int,
+        initial_rolls: OptionalType[List[int]] = None,
+        keep_type: OptionalType[KeepType] = None,
+        keep_amount: int = 1,
+    ):
         if initial_rolls is None:
             self.dice = [randint(1, sides) for _ in range(dice_count)]
         else:
@@ -45,9 +52,9 @@ class Roll:
         if self.keep_type is None:
             return sum(self.dice)
         elif self.keep_type == KeepType.highest or self.keep_type == KeepType.keep:
-            return sum(sorted(self.dice)[-self.keep_amount:])
-        else: #KeepType.lowest
-            return sum(sorted(self.dice)[:self.keep_amount])
+            return sum(sorted(self.dice)[-self.keep_amount :])
+        else:  # KeepType.lowest
+            return sum(sorted(self.dice)[: self.keep_amount])
 
     def __add__(self, other: Union[Real, Roll]) -> Real:
         if isinstance(other, Real):
@@ -55,7 +62,7 @@ class Roll:
         elif isinstance(other, Roll):
             return self.value + other.value
         else:
-            raise Exception("Bad addition operand type")
+            raise Exception('Bad addition operand type')
 
     def __sub__(self, other: Union[Real, Roll]) -> Real:
         if isinstance(other, Real):
@@ -63,7 +70,7 @@ class Roll:
         elif isinstance(other, Roll):
             return self.value - other.value
         else:
-            raise Exception("Bad subtraction operand type")
+            raise Exception('Bad subtraction operand type')
 
     def __mul__(self, other: Union[Real, Roll]) -> Real:
         if isinstance(other, Real):
@@ -71,7 +78,7 @@ class Roll:
         elif isinstance(other, Roll):
             return self.value * other.value
         else:
-            raise Exception("Bad multiplication operand type")
+            raise Exception('Bad multiplication operand type')
 
     def __truediv__(self, other: Union[Real, Roll]) -> Real:
         if isinstance(other, Real):
@@ -79,7 +86,7 @@ class Roll:
         elif isinstance(other, Roll):
             return self.value / other.value
         else:
-            raise Exception("Bad true division operand type")
+            raise Exception('Bad true division operand type')
 
     def __floordiv__(self, other: Union[Real, Roll]) -> Real:
         if isinstance(other, Real):
@@ -87,4 +94,4 @@ class Roll:
         elif isinstance(other, Roll):
             return self.value // other.value
         else:
-            raise Exception("Bad floor division operand type")
+            raise Exception('Bad floor division operand type')
