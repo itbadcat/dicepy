@@ -10,7 +10,8 @@ readme = "README.md"
 requires-python = ">=3.7"
 keywords = ["dice", "notation", "rolling", "tabletop", "games", "dnd"]
 authors = [
-  {name = "Oowazu Nonowazu", email = "oowazu.nonowazu@gmail.com"}
+  {name = "Oowazu Nonowazu", email = "oowazu.nonowazu@gmail.com"},
+  {name = "Zachary Green", email = "zachary.g@live.com"}
 ]
 maintainers = [
   {name = "Oowazu Nonowazu", email = "oowazu.nonowazu@gmail.com"}
@@ -29,7 +30,7 @@ classifiers = [
   "Programming Language :: Python :: 3 :: Only",
 ]
 dependencies = [
-  "pyparsing"
+  "pyparsing >= 3.1.2"
 ]
 
 [project.urls]
