@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build-meta"
+
+[project]
+name = "dicepy"
+version = "0.0.1"
+description = "A small dice rolling library"
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["dice", "notation", "rolling", "tabletop", "games", "dnd"]
+authors = [
+  {name = "Oowazu Nonowazu", email = "oowazu.nonowazu@gmail.com"},
+  {name = "Zachary Green", email = "zachary.g@live.com"}
+]
+maintainers = [
+  {name = "Oowazu Nonowazu", email = "oowazu.nonowazu@gmail.com"}
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Games/Entertainment :: Role-Playing",
+  "License :: Freeware", # No license
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = [
+  "pyparsing >= 3.1.2"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/nonowazu/dicepy"
+"Bug Reports" = "https://github.com/nonowazu/dicepy/issues"
+"Source" = "https://github.com/nonowazu/dicepy"
+
+[tool.ruff]
+exclude = [
+  ".git",
+  "__pycache__"
+]
+line-length = 120
+indent-width = 4
+target-version = "py37"
+
+[tool.ruff.lint]
+select = ["E","F"]
+ignore = []
+fixable = ["ALL"]
+unfixable = []
+# Allow unused variables when underscore-prefixed
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
+
+[tool.mypy]
+python_version = "3.7"
+disallow_untyped_defs = true
+show_error_codes = true
+no_implicit_optional = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unused_configs = true
